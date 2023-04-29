@@ -1,6 +1,0 @@
-errors i treat:
-
-- non existing entities (if you try to manage a non existing grid or rover)
-- two rovers on the same coordinate (it is not possible to land a rover in a spot there is already another one)
-- rovers landing on outranging grid coordinates (if you try to land a rover in a spot outside the grid)
-- invalid directions or instructions

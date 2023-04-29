@@ -1,6 +1,7 @@
 import { GridFormStyles } from "./GridForm.styles";
 import ModalStructure from "../structure/ModalStructure";
 import { useState } from "react";
+import axios from "axios";
 
 interface GridFormProps {
     handleCreateModalVisible: () => void;
@@ -21,7 +22,7 @@ const GridForm = (props:GridFormProps) => {
             gridHeight
         };
 
-        const response = await fetch('http://127.0.0.1:3001/rover/', {
+        const response = await axios.post('http://127.0.0.1:3001/grid/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
