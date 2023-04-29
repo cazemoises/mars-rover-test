@@ -14,9 +14,9 @@ export const errors = {
             title: "Rover not found.",
             description: "It was not possible to find a rover with the provided information."
         },
-        invalid_direction: {
-            title: "Invalid direction.",
-            description: "The provided direction is invalid. The allowed values are 'N', 'S', 'E', or 'W'."
+        no_rovers_stored: {
+            title: "No rovers existing.",
+            description: "There are no rovers stored in the database."
         },
         not_created: {
             title: "Error creating rover.",
@@ -44,6 +44,10 @@ export const errors = {
             title: "Grid not found.",
             description: "A grid with the provided information was not found."
         },
+        title_already_exists: {
+            title: "Error creating grid.",
+            description: "A grid with the provided title already exists."
+        },
         not_created: {
             title: "Error creating grid.",
             description: "It was not possible to create the grid with the provided information. Check if the coordinates are correct and try again.",
@@ -55,6 +59,12 @@ export const errors = {
         not_deleted: {
             title: "Error deleting grid.",
             description: "It was not possible to delete the grid. Check if the grid exists and try again.",
+        },
+    },
+    MOVE: {
+        invalid_direction: {
+            title: "Invalid direction.",
+            description: "The provided direction is invalid. The allowed values are 'N', 'S', 'E', or 'W'."
         },
     }
 

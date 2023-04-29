@@ -4,6 +4,7 @@ import { sequelize } from '../instances/pg';
 export interface RoverInterface extends Model {
 
     id: number,
+    rover_label: string,
     x_pos: number,
     y_pos: number,
     direction: "N" | "E" | "S" | "W",
@@ -19,6 +20,11 @@ export const Rover = sequelize.define<RoverInterface>("rover", {
         autoIncrement: true,
         unique: true,
         primaryKey: true
+    },
+    rover_label: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true
     },
     x_pos: {
         type: DataTypes.INTEGER,

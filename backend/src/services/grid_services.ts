@@ -4,14 +4,33 @@ import { Grid } from "../models/Grid";
 
 export const grid_services = {
 
-    store: async (upper_limit: number, right_limit: number) => {
+    store: async (x_limit: number, y_limit: number, title: string) => {
+
+        console.log (x_limit, y_limit, title);
 
         try {
 
-            const grid = await Grid.create({
-                upper_limit: upper_limit,
-                right_limit: right_limit
+            const [grid, created] = await Grid.findOrCreate({
+                where: {
+                    title: title
+                },
+                defaults: {
+                    x_limit: x_limit,
+                    y_limit: y_limit
+                }
             });
+    
+            if (!created) {
+    
+                return {
+                    status: 400,
+                    error: {
+                        title: errors.GRID.not_created.title,
+                        description: errors.GRID.not_created.description
+                    }
+                }
+    
+            }
     
             return {
                 status: 201,
@@ -35,9 +54,13 @@ export const grid_services = {
 
     },
 
-    find: async (id: number) => {
+    find: async (title: string) => {
 
-        const grid = await Grid.findByPk(id);
+        const grid = await Grid.findOne({
+            where: {
+                title: title
+            }
+        });
 
         if (!grid) {
 

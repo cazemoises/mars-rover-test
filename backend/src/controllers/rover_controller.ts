@@ -9,7 +9,7 @@ export const rover_controller = {
 
     async store(req: Request, res: Response) {
 
-        const { x_pos, y_pos, direction, grid_id } = req.body;
+        const { rover_label, x_pos, y_pos, direction, grid_id } = req.body;
 
         try {
 
@@ -23,7 +23,7 @@ export const rover_controller = {
                 return res.status(400).json(errors.ROVER.not_created);
             }
 
-            const response = await rover_services.store(x_pos, y_pos, direction, grid_id);
+            const response = await rover_services.store(rover_label, x_pos, y_pos, direction, grid_id);
             return res.status(response.status).json(response);
 
         } catch (error) {
@@ -60,14 +60,66 @@ export const rover_controller = {
         return res.status(response.status).json(response);
 
     },
+    findAllRoversInOneGrid: async (req: Request, res: Response) => {
+
+        const grid_id = parseInt(req.params.grid_id as string);
+
+        const grid = await Grid.findByPk(grid_id);
+
+        if (!grid) {
+
+            return res.status(404).json(errors.GRID.not_found);
+
+        }
+
+        try {
+
+            const response = await rover_services.findAllRoversInOneGrid(grid_id);
+            return res.status(response.status).json(response);
+
+        } catch (error) {
+
+            console.error(error);
+            return res.status(500).json(errors.SERVER.internal_server_error);
+
+        }
+
+    },
+
 
     async move(req: Request, res: Response) {
 
         const { rover_id, grid_id, instruction } = req.body;
 
-        const response = await rover_services.move(rover_id, grid_id, instruction);
+        try {
 
-        return res.status(response.status).json(response);
+            const response = await rover_services.move(rover_id, grid_id, instruction);
+            return res.status(response.status).json(response);
+
+        } catch (error) {
+
+            console.error(error);
+            return res.status(500).json(errors.SERVER.internal_server_error);
+
+        }
+
+    },
+
+    async delete(req: Request, res: Response) {
+
+        const id = parseInt(req.params.id);
+
+        try {
+
+            const response = await rover_services.deleteRover(id);
+            return res.status(response.status).json(response);
+
+        } catch (error) {
+
+            console.error(error);
+            return res.status(500).json(errors.SERVER.internal_server_error);
+
+        }
 
     }
 
