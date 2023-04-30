@@ -16,7 +16,11 @@ export const errors = {
         },
         no_rovers_stored: {
             title: "No rovers existing.",
-            description: "There are no rovers stored in the database."
+            description: "There are no rovers landed on this grid."
+        },
+        not_in_grid_limits: {
+            title: "The rover is not within the grid boundaries.",
+            description: "The coordinate values must be greater than 0 and less than the grid limits."
         },
         not_created: {
             title: "Error creating rover.",
@@ -47,6 +51,14 @@ export const errors = {
         title_already_exists: {
             title: "Error creating grid.",
             description: "A grid with the provided title already exists."
+        },
+        name_already_exists: {
+            title: "The given name is already in use.",
+            description: "There is already a grid with the provided label stored in the database."
+        },
+        invalid_data: {
+            title: "The provided data is not valid.",
+            description: "Check the provided info again and be sure there is nothing wrong."
         },
         not_created: {
             title: "Error creating grid.",

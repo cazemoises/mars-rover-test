@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.grid (
 CREATE TABLE IF NOT EXISTS public.rover (
 
 	id serial NOT NULL,
-    rover_label varchar UNIQUE NOT NULL,
+    rover_label varchar NOT NULL,
 	x_pos int NOT NULL,
 	y_pos int NOT NULL,
 	direction char NOT NULL,

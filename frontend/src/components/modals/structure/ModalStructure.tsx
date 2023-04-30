@@ -9,9 +9,11 @@ interface IModalStructure {
 const ModalStructure = (props: IModalStructure) => {
 
     return (
-        <ModalStructureStyles.Container>
-            {props.children}
-        </ModalStructureStyles.Container>
+        <ModalStructureStyles.Overlay>
+            <ModalStructureStyles.Container>
+                {props.children}
+            </ModalStructureStyles.Container>
+        </ModalStructureStyles.Overlay>
     )
 
 }

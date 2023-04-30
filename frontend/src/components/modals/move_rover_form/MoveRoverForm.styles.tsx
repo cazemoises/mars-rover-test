@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const GridFormStyles = {
+export const MoveRoverFormStyles = {
 
     Row: styled.div`
     display: flex;
-    justify-content: space-between;
+    height: max-content;
+    justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
     `,
@@ -38,7 +39,6 @@ export const GridFormStyles = {
     InputWrapper: styled.div`
     display: flex;
     flex-direction: column;
-    flex: 1;
     margin: .3rem 0;
     `,
 
@@ -96,6 +96,15 @@ export const GridFormStyles = {
     & button:hover, & input[type="submit"]:hover {    
         transform: scale(1.05);
     }
+    `,
+
+    MoveButton: styled.button`
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    background-color: #cecece;
+    border: 2px solid #cecece;
+    font-weight: 600;
+    border-radius: 1rem;
     `,
 
     CloseButton: styled.button`

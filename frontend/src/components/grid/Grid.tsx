@@ -1,5 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+
+import MoveRoverForm from '../../components/modals/move_rover_form/MoveRoverForm';
 
 import { GridStyles } from './Grid.styles';
 
@@ -26,77 +28,99 @@ const Grid = (props: IData) => {
     
   const svgRef = useRef(null);
 
+  const [ moveRoverVisible, setMoveRoverVisible ] = useState(false);
+  const [ selectedRover, setSelectedRover ] = useState({ id: 0, rover_label: '', x_pos: 0, y_pos: 0, direction: '', grid_id: 0 });
+
+  const handleMoveRoverVisible = () => {
+    setMoveRoverVisible(!moveRoverVisible);
+  }
+
   useEffect(() => {
     let svg = d3.select(svgRef.current);
 
     const data = props.rovers;
     const grid = props.grid;
 
-    const coefficient = 40;
+    const coefficient = Math.min(450 / grid.x_limit, 450 / grid.y_limit);
 
     const width = grid.x_limit * coefficient;
     const height = grid.y_limit * coefficient;
 
-const verticalLines = svg
-  .selectAll('.vertical-line')
-  .data(d3.range(coefficient, width + coefficient, coefficient))
-  .enter()
-  .append('line')
-  .attr('x1', (d) => d)
-  .attr('y1', 0)
-  .attr('x2', (d) => d)
-  .attr('y2', height + coefficient)
-  .attr('stroke', 'gray')
-  .attr('stroke-width', 1)
-  .attr('class', 'vertical-line');
+    const circleRadius = coefficient / 4;
+    const circleStrokeWidth = 1;
 
-const horizontalLines = svg
-  .selectAll('.horizontal-line')
-  .data(d3.range(coefficient, height + coefficient, coefficient))
-  .enter()
-  .append('line')
-  .attr('x1', 0)
-  .attr('y1', (d) => d)
-  .attr('x2', width + coefficient)
-  .attr('y2', (d) => d)
-  .attr('stroke', 'gray')
-  .attr('stroke-width', 1)
-  .attr('class', 'horizontal-line');
-
-    const circles = svg
-      .selectAll('circle')
-      .data(data)
-      .enter()
-      .append('circle')
-      .attr('cx', (d) => d.x_pos === 0 ? coefficient : d.x_pos * coefficient)
-      .attr('cy', (d) => d.y_pos === 0 ? coefficient: d.y_pos * coefficient)
-      .attr('r', coefficient / 4)
-      .attr('fill', '#ff0000')
-      .attr('stroke', 'black')
-      .attr('stroke-width', 1)
-      .attr('cursor', 'pointer')
-.on('mouseover', (_event, d) => {
-    const text = svg
-      .append('text')
-      .attr('x', d.x_pos === 0 ? coefficient : d.x_pos * coefficient)
-      .attr('y', d.y_pos === 0 ? coefficient / 2 : d.y_pos * coefficient - coefficient / 2)
-      .text(`${d.rover_label}`)
-      .attr('font-size', '14px')
-      .attr('text-anchor', 'middle')
-      .attr('fill', '#666');
-    d3.select(text.node()).datum(d).attr('class', 'point-text');
-  })
-  .on('mouseout', (_event, d) => {
-    const text = svg.select('.point-text').filter((datum) => datum === d);
-    text.remove();
-  });
+    const verticalLines = svg
+    .selectAll('.vertical-line')
+    .data(d3.range(coefficient, width + coefficient, coefficient))
+    .enter()
+    .append('line')
+    .attr('x1', (d) => d)
+    .attr('y1', height)
+    .attr('x2', (d) => d)
+    .attr('y2', coefficient)
+    .attr('stroke', 'gray')
+    .attr('stroke-width', 1)
+    .attr('class', 'vertical-line');
   
-  }, [props.rovers]);
+  const circles = svg
+    .selectAll('circle')
+    .data(data)
+    .enter()
+    .append('circle')
+    .attr('cx', (d) => d.x_pos === 0 ? coefficient : d.x_pos * coefficient + coefficient)
+    .attr('cy', (d) => d.y_pos === 0 ? height : height - d.y_pos * coefficient)
+    .attr('r', Math.max(8, Math.min(200 / grid.x_limit, 200 / grid.y_limit)))
+    .attr('fill', '#ff0000')
+    .attr('stroke', 'gray')
+    .attr('stroke-width', circleStrokeWidth)
+    .attr('cursor', 'pointer')
+    .on('click', (_event, d) => {
+        setSelectedRover(d);
+        handleMoveRoverVisible();
+    })
+    .on('mouseover', (_event, d) => {
+      const text = svg
+        .append('text')
+        .attr('x', d.x_pos === 0 ? coefficient : d.x_pos * coefficient + coefficient)
+        .attr('y', height - d.y_pos * coefficient - circleRadius - 5)
+        .text(`${d.rover_label} - ${d.direction}`)
+        .attr('font-size', '14px')
+        .attr('text-anchor', 'middle')
+        .attr('fill', '#666');
+      d3.select(text.node()).datum(d).attr('class', 'point-text');
+    })
+    .on('mouseout', (_event, d) => {
+      const text = svg.select('.point-text').filter((datum) => datum === d);
+      text.remove();
+    })
+  
+  const horizontalLines = svg
+    .selectAll('.horizontal-line')
+    .data(d3.range(0, height, coefficient))
+    .enter()
+    .append('line')
+    .attr('x1', coefficient)
+    .attr('y1', (d) => height - d)
+    .attr('x2', width)
+    .attr('y2', (d) => height - d)
+    .attr('stroke', 'gray')
+    .attr('stroke-width', 1)
+    .attr('class', 'horizontal-line');
+  
+  
+  }, [props.rovers, props.grid]);
 
   return (
     <GridStyles.Container>
         <GridStyles.Svg ref={svgRef} width={500} height={500}>
         </GridStyles.Svg>
+        {
+            moveRoverVisible &&
+            <MoveRoverForm
+            handleMoveRoverVisible={handleMoveRoverVisible}
+            rover={selectedRover}
+            />
+        }
     </GridStyles.Container>
   );
 };

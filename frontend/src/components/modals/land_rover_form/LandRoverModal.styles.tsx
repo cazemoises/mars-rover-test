@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const GridFormStyles = {
+export const LandRoverModalStyles = {
 
     Row: styled.div`
     display: flex;
@@ -38,8 +38,8 @@ export const GridFormStyles = {
     InputWrapper: styled.div`
     display: flex;
     flex-direction: column;
-    flex: 1;
     margin: .3rem 0;
+    flex: 1;
     `,
 
     Label: styled.label`

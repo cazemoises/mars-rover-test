@@ -2,11 +2,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const successToast = (message: string) => {
+const infoToast = (message: string) => {
 
     return (
 
-        toast.success(message, {
+        toast.info(message, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -22,4 +22,4 @@ const successToast = (message: string) => {
 
 }
 
-export default successToast;
+export default infoToast;

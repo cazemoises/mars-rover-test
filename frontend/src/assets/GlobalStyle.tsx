@@ -16,6 +16,14 @@ const GlobalStyle = createGlobalStyle`
         color: #fff;
     }
 
+    button {
+        transition: .2s ease;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    } 
+
 `;
 
 export default GlobalStyle;

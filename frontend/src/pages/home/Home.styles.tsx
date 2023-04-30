@@ -50,9 +50,6 @@ export const HomeStyles = {
     font-weight: 700;
     font-size: 1rem;
     transition: .5s ease;
-    &:hover {
-        transform: scale(1.05);
-    }
     .dark-mode & {
         border: 2px solid #fff;
         color: #fff;

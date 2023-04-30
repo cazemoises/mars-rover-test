@@ -25,8 +25,8 @@ export const grid_services = {
                 return {
                     status: 400,
                     error: {
-                        title: errors.GRID.not_created.title,
-                        description: errors.GRID.not_created.description
+                        title: errors.GRID.name_already_exists.title,
+                        description: errors.GRID.name_already_exists.description
                     }
                 }
     
@@ -34,9 +34,11 @@ export const grid_services = {
     
             return {
                 status: 201,
-                title: success.GRID.created.title,
-                description: success.GRID.created.description,
-                data: grid
+                success: {
+                    title: success.GRID.created.title,
+                    description: success.GRID.created.description,
+                    data: grid
+                }
             };
 
         } catch (error) {
@@ -44,8 +46,8 @@ export const grid_services = {
             return {
                 status: 400,
                 error: {
-                    title: errors.GRID.not_created.title,
-                    description: errors.GRID.not_created.description,
+                    title: errors.GRID.invalid_data.title,
+                    description: errors.GRID.invalid_data.description,
                     error: error
                 }
             }
@@ -116,8 +118,10 @@ export const grid_services = {
 
         return {
             status: 404,
-            title: errors.GRID.not_found.title,
-            description: errors.GRID.not_found.description
+            error: {
+                title: errors.GRID.not_found.title,
+                description: errors.GRID.not_found.description
+            }
         }
 
     }

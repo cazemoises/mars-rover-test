@@ -5,6 +5,7 @@ import { errors } from "../constants/errors";
 import { Grid } from "../models/Grid";
 import { moveRover } from "../utils/move_rover";
 import { grid_services } from "./grid_services";
+import { Op } from "sequelize";
 
 export const rover_services = {
 
@@ -28,11 +29,20 @@ export const rover_services = {
 
         const [rover, created] = await Rover.findOrCreate({
             where: {
-                x_pos: x_pos,
-                y_pos: y_pos,
-                grid_id: grid_id
+                [Op.or]: 
+                [
+                    {x_pos: x_pos,
+                    y_pos: y_pos,
+                    grid_id: grid_id},
+                    {rover_label: rover_label,
+                    grid_id: grid_id
+                    }
+                ]
             },
             defaults: {
+                x_pos: x_pos,
+                y_pos: y_pos,
+                grid_id: grid_id,
                 rover_label: rover_label,
                 direction: direction
             }
@@ -176,9 +186,11 @@ export const rover_services = {
 
         }
 
-        const response = moveRover(rover, instruction);
+        const response = moveRover(rover, grid.x_limit, grid.y_limit, instruction);
 
-        if (response.success) {
+        console.log(response);
+
+        if (response.status == 201) {
 
             rover.save();
 
@@ -204,8 +216,10 @@ export const rover_services = {
 
         return {
             status: 404,
-            title: errors.ROVER.not_found.title,
-            description: errors.ROVER.not_found.description
+            error: {
+                title: errors.ROVER.not_found.title,
+                description: errors.ROVER.not_found.description
+            }
         }
 
     },    
