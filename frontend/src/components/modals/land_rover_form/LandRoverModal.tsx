@@ -72,7 +72,7 @@ const LandRoverModal = (props: GridFormProps) => {
 
         } catch(error: any) {
 
-            errorToast(error.response.data.title);
+            errorToast(error.response.data.error.title);
 
         }
 

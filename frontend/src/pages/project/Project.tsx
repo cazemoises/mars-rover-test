@@ -21,9 +21,16 @@ const Project = () => {
     const { projectTitle } = useParams();
     
     const [ landRoverModalVisible, setLandRoverModalVisible ] = useState(false);
+    const [ infoCardVisible, setInfoCardVisible ] = useState(false);
 
     const handleLandRoverModalVisible = () => {
         setLandRoverModalVisible(!landRoverModalVisible)
+    }
+
+    const handleInfoCardVisible = () => {
+
+        setInfoCardVisible(!infoCardVisible);
+
     }
 
     const [ rovers, setRovers ] = useState([]);
@@ -85,6 +92,17 @@ const Project = () => {
 
         return (
         <ProjectStyles.Container>
+            <ProjectStyles.InfoContainer>
+                <ProjectStyles.Info>
+                    &#x1F6C8;
+                </ProjectStyles.Info>
+                <ProjectStyles.InfoCard>
+                    <ProjectStyles.Ul>
+                        <ProjectStyles.Li>Hover the circles to see their info.</ProjectStyles.Li>
+                        <ProjectStyles.Li>Click the circles to move them.</ProjectStyles.Li>
+                    </ProjectStyles.Ul>
+                </ProjectStyles.InfoCard>
+            </ProjectStyles.InfoContainer>
             <ProjectStyles.Title>{projectTitle}</ProjectStyles.Title>
             {
                 grid.id !== -1 &&

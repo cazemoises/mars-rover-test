@@ -3,6 +3,7 @@ import ModalStructure from "../structure/ModalStructure";
 import { useState } from "react";
 import axios from "axios";
 import successToast from "../../toasts/successToast";
+import errorToast from "../../toasts/errorToast";
 
 interface IGridFormProps {
     handleCreateModalVisible: () => void;
@@ -45,19 +46,28 @@ const GridForm = (props: IGridFormProps) => {
 
         console.log(gridData);
 
-        const response = await axios.post('http://127.0.0.1:3001/grid/', JSON.stringify(gridData), {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            responseType: 'json'
-        });
+        try {
 
-        console.log(response);
-        successToast(response.data.success.title);
-        props.handleCreateModalVisible();
-        setTimeout(() => {
-            window.location.reload();
-        }, 1500)
+            const response = await axios.post('http://127.0.0.1:3001/grid/', JSON.stringify(gridData), {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                responseType: 'json'
+            });
+    
+            console.log(response);
+            successToast(response.data.success.title);
+            props.handleCreateModalVisible();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500)
+
+        } catch (error: any) {
+
+            errorToast(error.response.data.error.title);
+
+        }
+
     }
 
     return (

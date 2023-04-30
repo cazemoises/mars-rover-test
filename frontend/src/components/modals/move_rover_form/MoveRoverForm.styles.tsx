@@ -121,7 +121,26 @@ export const MoveRoverFormStyles = {
     body.dark-mode & {
             background-color: #39931d;
         }
-    `
+    `,
 
+    Clear: styled.button`
+    border-radius: 1rem;
+    background-color: #f44336;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    transition: 0.2s ease;
+  
+    &:hover {
+      background-color: #d32f2f;
+      transform: scale(1.05);
+    }
+  
+    body.dark-mode & {
+      background-color: #b71c1c;
+    }
+  `
 
 }

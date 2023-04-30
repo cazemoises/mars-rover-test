@@ -14,6 +14,10 @@ export const errors = {
             title: "Rover not found.",
             description: "It was not possible to find a rover with the provided information."
         },
+        name_already_exists: {
+            title: "Name already exists.",
+            description: "There is already a rover with the provided name landed on this grid."
+        },
         no_rovers_stored: {
             title: "No rovers existing.",
             description: "There are no rovers landed on this grid."
@@ -27,8 +31,8 @@ export const errors = {
             description: "It was not possible to create the rover with the provided information. Check if the coordinates are within the grid.",
         },
         rover_already_landed: {
-            title: "Coordinades not available.",
-            description: "There is already a rover landed on the provided information."
+            title: "Provided name or coordinates already in use.",
+            description: "There is already a rover landed on the provided grid coordinates or with the provided name."
         },
         not_updated: {
             title: "Error updating rover coordinates.",

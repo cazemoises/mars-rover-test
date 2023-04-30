@@ -35,6 +35,11 @@ const MoveRoverForm = (props: RoverProps) => {
         
     };
 
+    const removeLetterToInstruction = () => {
+        setInstruction(prevInstruction => prevInstruction.slice(0, -1));
+        console.log(instruction);
+    }    
+
     const handleInstruction = (e: React.ChangeEvent<HTMLInputElement>) => {
 
         setInstruction(e.target.value);
@@ -59,7 +64,7 @@ const MoveRoverForm = (props: RoverProps) => {
                 window.location.reload();
             }, 1500);
 
-        } catch (error) {
+        } catch (error: any) {
 
             errorToast(error.response.data.error.title);
 
@@ -88,6 +93,7 @@ const MoveRoverForm = (props: RoverProps) => {
                 <MoveRoverFormStyles.MoveButton type="button" onClick={(event)=> {addLetterToInstruction("L")}}>L</MoveRoverFormStyles.MoveButton>
                 <MoveRoverFormStyles.MoveButton type="button" onClick={(event) => {addLetterToInstruction("M")}}>M</MoveRoverFormStyles.MoveButton>
                 <MoveRoverFormStyles.MoveButton type="button" onClick={(event) => {addLetterToInstruction("R")}}>R</MoveRoverFormStyles.MoveButton>
+                <MoveRoverFormStyles.Clear type="button" onClick={removeLetterToInstruction}>X</MoveRoverFormStyles.Clear>
                 </MoveRoverFormStyles.Row>
                 <MoveRoverFormStyles.ButtonsWrapper>
                             <MoveRoverFormStyles.CloseButton onClick={props.handleMoveRoverVisible}>Close</MoveRoverFormStyles.CloseButton>

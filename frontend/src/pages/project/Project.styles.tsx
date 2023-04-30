@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+
+const SlideInAnimation = keyframes`
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+`
+
 
 export const ProjectStyles = {
 
@@ -52,6 +64,43 @@ export const ProjectStyles = {
     body.dark-mode & {
         border: 2px solid #fff;
     }
+    `,
+
+    InfoContainer: styled.div`
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    `,
+
+    Info: styled.span`
+    font-size: 2rem;
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:before {
+        font-size: .8rem;
+        content: "hover me";
+    }
+
+    &:hover ~ div {
+        animation: ${SlideInAnimation} 0.5s ease forwards;
+    }
+    `,
+
+    InfoCard: styled.div`
+    opacity: 0;
+    `,
+
+    Ul: styled.ul`
+    `,
+
+    Li: styled.li`
     `
 
 }
