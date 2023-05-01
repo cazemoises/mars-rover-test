@@ -4,36 +4,35 @@
 
 # Description
 
-  A NodeJS + ReactJS + PostgresDB web app designed to mars rovers controlling. You can have an efficient management of all your rovers.
-
+This is a web application built using NodeJS, ReactJS, and PostgresDB. It allows efficient management of Mars rovers by providing rover controlling functionality.
 
 # Installation Guide
 
-In this section there will be the application's step-by-step:
+The following section provides step-by-step instructions on how to install and run the application:
 
 **First step:**
 
-Docker is a necessary application to run this project, you can access it's official page in the following link: [Docker's official page](https://www.docker.com/products/docker-desktop/) and download it according to your specific operational system.
+Docker is a prerequisite to run this project. You can access the official Docker page at https://www.docker.com/products/docker-desktop/ and download the appropriate version for your operating system.
 
 **Second step:**
 
-To run the backend container, you must open the backend folder in a terminal and run the following code:
+To run the backend container, navigate to the backend folder in a terminal and execute the following command:
 
 ```
 docker-compose up -d
 ```
 
-By doing this you are executing the container and once it is already up, it's url can be acessed at 
+This will start the container and once it is up, the URL can be accessed at:
 ```
 localhost:3001/
 ```
 
 **Third step:**
 
-Once the backend is running, you must now run the frontend container. To do it, do the following steps:
+After the backend is running, you must start the frontend container. Follow the steps below:
 
 1. Open the frontend folder in a terminal.
-2. Run the docker-compose up -d command again.
+2. Execute the docker-compose up -d command again.
 3. Run the following three commands:
    
 ```
