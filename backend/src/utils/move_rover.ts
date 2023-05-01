@@ -1,12 +1,15 @@
 // Error and success constant messages
 import { errors } from "../constants/errors";
 import { success } from "../constants/success";
+import { Rover } from "../models/Rover";
+import { checkGridLimits } from "./check_grid_limits";
 
 // This function moves the rover based on a set of instructions
-export const moveRover = (
+export const moveRover = async (
         rover: {
         x_pos: number,
         y_pos: number,
+        grid_id: number,
         direction: "N" | "S" | "E" | "W", // Rover's direction can only be one of these four values
         },
         x_limit: number,
@@ -14,20 +17,23 @@ export const moveRover = (
         instruction: string // String containing the instructions for the rover's movement
     ) => {
 
+        let rover_copy = { x_pos: rover.x_pos, y_pos: rover.y_pos, direction: rover.direction, grid_id: rover.grid_id };
+
         for (let char of instruction) { // Iterate over each character of the instruction string
     
             switch (char) {
 
                 case "R": // If the instruction is "R", turn the rover to the right
-                    rotateFunctions.turnRight(rover);
+                    rotateFunctions.turnRight(rover_copy);
                     break;
                 
                 case "L": // If the instruction is "L", turn the rover to the left
-                    rotateFunctions.turnLeft(rover);
+                    rotateFunctions.turnLeft(rover_copy);
                     break;
                 
                 case "M": // If the instruction is "M", move the rover forward
-                    const result = rotateFunctions.moveForward(rover, x_limit, y_limit);
+
+                    const result = rotateFunctions.moveForward(rover_copy, x_limit, y_limit);
                 
                     if (result?.status === 400) {
                 
@@ -50,7 +56,7 @@ export const moveRover = (
 
         };
 
-        if (rover.x_pos < 0 || rover.x_pos > x_limit || rover.y_pos < 0 || rover.y_pos > y_limit) {
+        if (rover_copy.x_pos < 0 || rover_copy.x_pos > x_limit || rover_copy.y_pos < 0 || rover_copy.y_pos > y_limit) {
 
             return {
                 status: 400,
@@ -61,6 +67,24 @@ export const moveRover = (
             };
             
         }
+
+        const existingRover = await Rover.findOne({where: {x_pos: rover_copy.x_pos, y_pos: rover_copy.y_pos, grid_id: rover_copy.grid_id}});
+
+        if (existingRover) {
+
+            return {
+                status: 400,
+                error: {
+                    title: errors.ROVER.position_occupied.title,
+                    description: errors.ROVER.position_occupied.description
+                }
+            };
+
+        };
+
+        rover.x_pos = rover_copy.x_pos;
+        rover.y_pos = rover_copy.y_pos;
+        rover.direction = rover_copy.direction;
 
         return {
             status: 201,
@@ -130,8 +154,8 @@ export const rotateFunctions = {
         switch (rover.direction) {
             
             case "N": // If the rover is facing north, move it one unit up (increment y coordinate)
-                if (rover.y_pos + 1 >= y_limit) {
-                
+                if (!checkGridLimits(rover.x_pos, rover.y_pos + 1, {x_limit, y_limit})) {
+
                     return {
                         status: 400,
                         error: {
@@ -139,14 +163,13 @@ export const rotateFunctions = {
                             description: errors.ROVER.not_in_grid_limits.description
                         }
                     }
-                    
-                }            
 
+                }
+                
                 rover.y_pos++;
                 break;
-            
             case "E": // If the rover is facing east, move it one unit to the right (increment x coordinate)
-                if (rover.x_pos + 1 >= x_limit) {
+                if (!checkGridLimits(rover.x_pos + 1, rover.y_pos, {x_limit, y_limit})) {
                     return {
                         status: 400,
                         error: {
@@ -159,7 +182,7 @@ export const rotateFunctions = {
                 break;
 
             case "S": // If the rover is facing south, move it one unit down (decrement y coordinate)
-                if (rover.y_pos - 1 < 0) {
+            if (!checkGridLimits(rover.x_pos, rover.y_pos - 1, {x_limit, y_limit})) {
                     return {
                         status: 400,
                         error: {
@@ -172,7 +195,7 @@ export const rotateFunctions = {
                 break;
 
             case "W": // If the rover is facing west, move it one unit to the left (decrement x coordinate)
-                if (rover.x_pos - 1 < 0) {
+            if (!checkGridLimits(rover.x_pos - 1, rover.y_pos, {x_limit, y_limit})) {
 
                     return {
                         status: 400,

@@ -194,28 +194,10 @@ findAll: async () => {
 
         }
 
-        console.log(rover);
-        
         // Move the rover with the given instruction
-        const response = moveRover(rover, grid.x_limit, grid.y_limit, instruction);
-        
-        console.log(rover);
-        
-        const positionAlreadyOccupied = await Rover.findOne({
-            where: {
-                grid_id: rover.grid_id,
-                x_pos: rover.x_pos,
-                y_pos: rover.y_pos
-            }
-        });
+        const response = await moveRover(rover, grid.x_limit, grid.y_limit, instruction);
 
-        if (positionAlreadyOccupied) return {
-            status: 400,
-            error: {
-                title: errors.ROVER.position_occupied.title,
-                description: errors.ROVER.position_occupied.description
-            }
-        }
+        console.log(response);
 
         // If the rover's position was updated, save it to the database
         response.status === 201 && rover.save();

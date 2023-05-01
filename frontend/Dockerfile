@@ -1,20 +1,20 @@
-# Define a imagem base que será usada
+# Set the base image to be used
 FROM node:16-alpine
 
-# Define o diretório de trabalho dentro do contêiner
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copia os arquivos de package.json e package-lock.json para o diretório de trabalho
+# Copy the package.json and package-lock.json files to the working directory
 COPY package*.json ./
 
-# Instala as dependências do projeto
+# Install the project dependencies
 RUN npm install
 
-# Copia o restante dos arquivos do projeto para o diretório de trabalho
+# Copy the rest of the project files to the working directory
 COPY . .
 
-# Expõe a porta 5173 do contêiner
+# Expose port 5173 from the container
 EXPOSE 5173
 
-# Define o comando de inicialização do aplicativo
-CMD [ "npm", "start" ]
+# Define the command to run the application
+CMD ["sh", "-c", "npm ci && npm run start"]

@@ -30,11 +30,17 @@ const ProjectsList = () => {
                 
                 console.log(response);
 
-                setProjects(response.data.success.data);
+                if (response.data) {
+
+                    return setProjects(response.data.success.data);
+
+                };
+
+                return toast.info("No projects stored in the database.");
+
                 
             } catch (error) {
             
-                console.error(error);
                 toast.error('Error at retrieving projects data.');
                 
             }

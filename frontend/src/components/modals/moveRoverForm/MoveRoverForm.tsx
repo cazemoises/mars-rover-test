@@ -73,6 +73,7 @@ const MoveRoverForm = (props: RoverProps) => {
 
         } catch (error: any) {
 
+            console.log(error);
             // Display error toast
             errorToast(error.response.data.error.title);
 
