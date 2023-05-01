@@ -29,7 +29,6 @@ const NotFoundWithBackButton = () => {
     <>
       {/* Renders a reusable "Back" component if the path is not "/" */}
       {location.pathname !== "/" && <Back />}
-      <NotFound />
     </>
   );
 };
