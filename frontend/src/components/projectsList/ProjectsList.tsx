@@ -1,3 +1,4 @@
+// Import necessary components and modules
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -7,35 +8,42 @@ import axios from "axios";
 
 const ProjectsList = () => {
 
+    // Interface describing the project object
     interface Project {
-        id: number;
-        title: string;
-        x_limit: number;
-        y_limit: number;
+    id: number;
+    title: string;
+    x_limit: number;
+    y_limit: number;
     }    
 
+    // State to store the list of projects
     const [projects, setProjects] = useState([]);
 
+    // Fetches the list of projects from the server
     useEffect(() => {
 
-    const fetchData = async () => {
+        const fetchData = async () => {
 
-        try {
-        
-            const response = await axios.get('http://127.0.0.1:3001/grid');
-            setProjects(response.data.success.data);
-        
-        } catch (error) {
-        
-            console.error(error);
-            toast.error('Error at retrieving projects data.');
-        
-        }
-        
-    };
+            try {
+            
+                const response = await axios.get('http://127.0.0.1:3001/grid');
+                
+                console.log(response);
 
-    fetchData();
-  }, []);
+                setProjects(response.data.success.data);
+                
+            } catch (error) {
+            
+                console.error(error);
+                toast.error('Error at retrieving projects data.');
+                
+            }
+
+        };
+
+        fetchData();
+    
+    }, []);
 
     return (
         <ProjectsListStyles.Container>

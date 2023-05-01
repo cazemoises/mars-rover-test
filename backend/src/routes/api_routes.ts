@@ -10,4 +10,6 @@ api_router.get('/', (req: Request, res: Response) => {
         title: success.SERVER.server_on.title
     })
 
-})
+});
+
+export default api_router;

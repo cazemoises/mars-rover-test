@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const successToast = (message: string) => {
 
     return (

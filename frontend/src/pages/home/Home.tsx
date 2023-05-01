@@ -12,7 +12,7 @@ const Home = () => {
 
             <HomeStyles.Copyright>Copyright &#169;, 2023 Moises Cazé</HomeStyles.Copyright>
 
-        </HomeStyles.Container>
+        </HomeStyles.Container>     
 
     );
 

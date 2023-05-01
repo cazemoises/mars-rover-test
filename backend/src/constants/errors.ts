@@ -42,10 +42,14 @@ export const errors = {
             title: "Error deleting rover.",
             description: "It was not possible to delete the rover. Check if the rover exists and try again.",
         },
-        not_moved: {
-            title: "Error moving rover.",
-            description: "It was not possible to move the rover according to the provided instructions. Check if the coordinates are within the grid and if the direction is correct.",
+        position_occupied: {
+            title: "The position is already occupied.",
+            description: "It was not possible to move the rover to the given position."
         },
+        invalid_instruction: {
+            title: "Invalid given instruction.",
+            description: "The instruction commands accepted are W, L or R."
+        }
     },
     GRID: {
         not_found: {

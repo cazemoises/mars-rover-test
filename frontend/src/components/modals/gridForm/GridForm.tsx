@@ -1,3 +1,4 @@
+// Import necessary components and modules
 import { GridFormStyles } from "./GridForm.styles";
 import ModalStructure from "../structure/ModalStructure";
 import { useState } from "react";
@@ -5,57 +6,55 @@ import axios from "axios";
 import successToast from "../../toasts/successToast";
 import errorToast from "../../toasts/errorToast";
 
-interface IGridFormProps {
-    handleCreateModalVisible: () => void;
-}
+    interface IGridFormProps {
+        handleCreateModalVisible: () => void;
+    }
 
-const GridForm = (props: IGridFormProps) => {
+    const GridForm = (props: IGridFormProps) => {
 
+    // State for grid data
     const [gridData, setGridData] = useState({
         title: "",
         x_limit: 0,
         y_limit: 0
-      });
+    });
 
-    const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-
+    // Handle input change
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-    
+        
+        // If the name is not 'title', parse the value to integer
         if (name !== 'title') {
-
             const parsedValue = parseInt(value);
             
             return setGridData((prevState) => ({
                 ...prevState,
                 [name]: parsedValue,
             }));
-            
+
         }
         
+        // If the name is 'title', update the state with the new value
         return setGridData((prevState) => ({
             ...prevState,
-            [name]: value,
+            [name]: value.trim(),
         }));
-
     };
 
+    // Handle form submit
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        console.log(gridData);
-
+        // Send the data to the server
         try {
-
             const response = await axios.post('http://127.0.0.1:3001/grid/', JSON.stringify(gridData), {
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 responseType: 'json'
             });
-    
-            console.log(response);
+
+            // Show success toast, hide the modal and reload the page
             successToast(response.data.success.title);
             props.handleCreateModalVisible();
             setTimeout(() => {
@@ -63,11 +62,9 @@ const GridForm = (props: IGridFormProps) => {
             }, 1500)
 
         } catch (error: any) {
-
+            // Show error toast
             errorToast(error.response.data.error.title);
-
         }
-
     }
 
     return (

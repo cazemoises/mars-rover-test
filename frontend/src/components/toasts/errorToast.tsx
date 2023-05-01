@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const errorToast = (message: string) => {
 
     return (
@@ -20,6 +19,6 @@ const errorToast = (message: string) => {
 
     )
 
-}
+};
 
 export default errorToast;

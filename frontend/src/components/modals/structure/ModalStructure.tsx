@@ -1,5 +1,6 @@
 import { ModalStructureStyles } from "./ModalStructure.styles";
 
+// Define the props interface for the component
 interface IModalStructure {
 
     children: React.ReactNode

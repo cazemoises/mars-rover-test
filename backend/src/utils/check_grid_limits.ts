@@ -1,5 +1,3 @@
-import { Grid } from "../models/Grid";
-
 export function checkGridLimits(x: number, y: number, grid: { x_limit: number; y_limit: number; }): boolean {
     
     const x_valid = x >= 0 && x <= grid.x_limit - 1;
