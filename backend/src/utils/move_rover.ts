@@ -10,6 +10,7 @@ export const moveRover = async (
         x_pos: number,
         y_pos: number,
         grid_id: number,
+        id: number,
         direction: "N" | "S" | "E" | "W", // Rover's direction can only be one of these four values
         },
         x_limit: number,
@@ -70,7 +71,7 @@ export const moveRover = async (
 
         const existingRover = await Rover.findOne({where: {x_pos: rover_copy.x_pos, y_pos: rover_copy.y_pos, grid_id: rover_copy.grid_id}});
 
-        if (existingRover) {
+        if (existingRover && existingRover.id !== rover.id) {
 
             return {
                 status: 400,
