@@ -1,5 +1,3 @@
-README_CONTENT = '''# Project: *Mars Rover Test*
-
 # Author: *Moises Cazé*
 
 # Description
