@@ -34,7 +34,7 @@ Once the backend is running, you must now run the frontend container. To do it, 
 
 1. Open the frontend folder in a terminal.
 2. Run the docker-compose up -d command again.
-3. Run the following two commands:
+3. Run the following three commands:
    
 ```
 docker exec -it vite_docker sh
