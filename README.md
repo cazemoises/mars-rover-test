@@ -1,5 +1,3 @@
-README_CONTENT = '''# Project: *Mars Rover Test*
-
 # Author: *Moises Cazé*
 
 # Description
@@ -29,7 +27,6 @@ docker-compose up -d
 **Frontend setup**
 
 1. Open a terminal and navigate to the frontend folder.
-2. Create a new file called `.env` based on the `.env.sample` file provided. The `.env` file contains environment variables required by the application.
 3. Run the following command to start the frontend container:
 
 ```
@@ -37,12 +34,7 @@ docker-compose up -d
 ```
 
 
-4. The frontend container should now be running. You can access the application by opening your browser and going to `http://localhost:3000`.
-
-
-**PostgresDB setup**
-
-The installation guide does not include instructions for setting up and connecting to the PostgresDB. Therefore, you will need to follow the instructions specific to your system to set up the PostgresDB and connect it to the backend.
+4. The frontend container should now be running. You can access the application by opening your browser and going to `http://localhost:5173`.
 
 **Environment-specific configurations**
 
