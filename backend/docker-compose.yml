@@ -6,22 +6,23 @@ services:
       context: .
       dockerfile: Dockerfile.node
     ports:
-      - "3001:3001"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     depends_on:
       - db
+    restart: on-failure
 
   db:
     build:
       context: .
       dockerfile: Dockerfile.postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: postgres
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PW}
+      POSTGRES_DB: ${PG_DB}
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - ${PG_PORT}:${PG_PORT}
 
 volumes:
   pgdata:
